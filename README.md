@@ -49,13 +49,13 @@ mcpo --port 8000 --api-key "top-secret" --server-type "sse" -- http://127.0.0.1:
 You can also provide headers for the SSE connection:
 
 ```bash
-mcpo --port 8000 --api-key "top-secret" --server-type "sse" --headers '{"Authorization": "Bearer token", "X-Custom-Header": "value"}' -- http://127.0.0.1:8001/sse
+mcpo --port 8000 --api-key "top-secret" --server-type "sse" --header '{"Authorization": "Bearer token", "X-Custom-Header": "value"}' -- http://127.0.0.1:8001/sse
 ```
 
 To use a Streamable HTTP-compatible MCP server, specify the server type and endpoint:
 
 ```bash
-mcpo --port 8000 --api-key "top-secret" --server-type "streamable_http" -- http://127.0.0.1:8002/mcp
+mcpo --port 8000 --api-key "top-secret" --server-type "streamable-http" -- http://127.0.0.1:8002/mcp
 ```
 
 You can also run mcpo via Docker with no installation:
@@ -76,12 +76,20 @@ That’s it. Your MCP tool is now available at http://localhost:8000 with a gene
 
 ### 🔄 Using a Config File
 
-You can serve multiple MCP tools via a single config file that follows the [Claude Desktop](https://modelcontextprotocol.io/quickstart/user) format:
+You can serve multiple MCP tools via a single config file that follows the [Claude Desktop](https://modelcontextprotocol.io/quickstart/user) format.
+
+Enable hot-reload mode with `--hot-reload` to automatically watch your config file for changes and reload servers without downtime:
 
 Start via:
 
 ```bash
 mcpo --config /path/to/config.json
+```
+
+Or with hot-reload enabled:
+
+```bash
+mcpo --config /path/to/config.json --hot-reload
 ```
 
 Example config.json:
@@ -106,7 +114,7 @@ Example config.json:
       }
     },
     "mcp_streamable_http": {
-      "type": "streamable_http",
+      "type": "streamable-http",
       "url": "http://127.0.0.1:8002/mcp"
     } // Streamable HTTP MCP Server
   }
